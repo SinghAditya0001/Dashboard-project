@@ -26,14 +26,50 @@ function App() {
      const [darkMode, setDarkMode] = useState(false);
   
      // Api Fetch
- useEffect(() => {
-  fetch("https://dummyjson.com/users?limit=5")
-    .then(res => res.json())
-    .then(data => {
-      setEmployees(data.users);
-      setOriginalEmployees(data.users);
-    });
+     useEffect(() => {
+
+  const savedEmployees =
+    localStorage.getItem("employees");
+
+  if (savedEmployees) {
+
+    const parsedData =
+      JSON.parse(savedEmployees);
+
+    setEmployees(parsedData);
+    setOriginalEmployees(parsedData);
+
+  } else {
+
+    fetch("https://dummyjson.com/users?limit=5")
+      .then((res) => res.json())
+      .then((data) => {
+
+        setEmployees(data.users);
+        setOriginalEmployees(data.users);
+
+        localStorage.setItem(
+          "employees",
+          JSON.stringify(data.users)
+        );
+
+      });
+  }
+
 }, []);
+
+useEffect(() => {
+
+  if (employees.length > 0) {
+
+    localStorage.setItem(
+      "employees",
+      JSON.stringify(employees)
+    );
+
+  }
+
+}, [employees]);
 
   // Search Bar + Filter + Sort 
 

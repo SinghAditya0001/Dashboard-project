@@ -25,9 +25,3 @@ A React.js Employee Management Dashboard built using DummyJSON API.
 - CSS
 - DummyJSON API
 
-## Run Locally
-
-```bash
-npm install
-npm run dev
-```
